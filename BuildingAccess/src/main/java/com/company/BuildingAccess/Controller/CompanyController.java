@@ -22,6 +22,7 @@ public class CompanyController {
     //CREATE, POST
     @RequestMapping(value = "/company", method = RequestMethod.POST)
     public Company addCompany(@RequestBody @Valid Company company){
+
         return service.addCompany(company);
     }
 
@@ -52,9 +53,9 @@ public class CompanyController {
     }
 
     //FIND COMPANY BY NAME
-    @RequestMapping(value = "/companyByName/{companyName}", method = RequestMethod.GET)
-    public List<Company> getCompanyByName(@PathVariable String companyName){
-        return service.findByCompanyName(companyName);
+    @RequestMapping(value = "/companyByName/{name}", method = RequestMethod.GET)
+    public List<Company> getCompanyByName(@PathVariable String name){
+        return service.findByName(name);
     }
 
     //FIND COMPANY BY FLOOR
@@ -62,55 +63,13 @@ public class CompanyController {
     public List<Company> getCompanyByFloor(@PathVariable Integer floor){
         return service.findByFloor(floor);
     }
+//
+////    //METHOD FOR EMPLOYEE ACCESS
+    @RequestMapping(value = "/companyAccess/{companyName}/{floor}", method = RequestMethod.GET)
+    public boolean getCompanyAccess(  @PathVariable String companyName, @PathVariable Integer floor,
+                                    @PathVariable String title){
+            return service.companyAccess(companyName, floor, title);
 
-    //METHOD FOR EMPLOYEE ACCESS
-    @RequestMapping(value = "/companyAccess/{floor}", method = RequestMethod.GET)
-    public boolean getCompanyAccess(boolean access, String companyName, Integer floor, String title){
-        access = false;
-        //SWITCH STATEMENTS
-        switch (companyName){
-            case "Carter Transportation":
-                if(floor == 1){
-                    access = true;
-                }
-                break;
-            case "Tyla's Law Firm":
-                if(floor == 2){
-                    access = true;
-                }
-                break;
-            case "Teagan's Flower Shop":
-                if(floor == 3){
-                    access = true;
-                }
-                break;
-            case "Pinterest":
-                if(floor == 4){
-                    access = true;
-                }
-                break;
-            case "Zara":
-                if(floor == 5){
-                    access = true;
-                }
-            case "Sephora":
-                if(floor == 6){
-                    boolean conferenceRoomAccess = false;
-                    boolean serverRoomAccess = false;
-                    access = true;
-                    if(title.equals("Manager")){
-                        conferenceRoomAccess = true;
-                    }
-                    if(title.equals("Database Admin")){
-                        serverRoomAccess = true;
-                    }
-                }
-            case "Nordstrom":
-                if(floor == 7 && floor == 8){
-                    access = true;
-                }
-        }
-        return service.access(access, companyName, floor, title);
     }
 
 }

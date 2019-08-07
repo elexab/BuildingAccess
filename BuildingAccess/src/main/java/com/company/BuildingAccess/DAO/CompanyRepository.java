@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
     //WAYS TO SEARCH DATABASE AND FIND INFORMATION
-    List<Company> findByCompanyName(String name);
+    List<Company> findByName(String name);
     List<Company> findByFloor(Integer floor);
 
 }

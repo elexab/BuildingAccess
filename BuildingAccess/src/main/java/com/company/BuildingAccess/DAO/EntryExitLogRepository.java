@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface EntryExitLogRepository extends JpaRepository<EntryExitLog, Integer> {
     //WAYS TO SEARCH DATABASE AND FIND INFORMATION
-    List<EntryExitLog> findByEmployee(String name);
-    List<EntryExitLog> findByCompany(String companyName);
+//    List<EntryExitLog> findByName(String name, int id);
+//    List<EntryExitLog> findByCompany(String name, int id);
 }

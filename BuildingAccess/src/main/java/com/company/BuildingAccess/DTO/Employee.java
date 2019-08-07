@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
+import java.util.Random;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -29,16 +30,22 @@ public class Employee {
     private String hireDate;
     @NotEmpty
     @Length(max=50)
-    private Integer startTime;
+    private String startTime;
     @NotEmpty
     @Length(max=50)
-    private Integer endTime;
+    private String endTime;
+
+    Random rand = new Random();
 
 //    //THIS IS USED TO LINKED TWO DIFFERENT TABLES TOGETHER
 //    //BY THE FOREIGN KEY, COMPANY ID
     @ManyToOne(fetch=FetchType.EAGER)//USE THIS TO LINKED TWO TABLES
-    @JoinColumn(name="Companyid")//FOREIGN KEY
+    @JoinColumn(name="companyid", updatable = false, insertable = false)//FOREIGN KEY
     private Company company;
+
+    @ManyToOne(fetch=FetchType.EAGER)//USE THIS TO LINKED TWO TABLES
+    @JoinColumn(name="logid", updatable = false, insertable = false)//FOREIGN KEY
+    private EntryExitLog log;
 
     //GETTERS AND SETTERS
     public Integer getEmployeeId() {
@@ -70,6 +77,7 @@ public class Employee {
     }
 
     public void setCompany(String companyName) {
+
         this.companyName = companyName;
     }
 
@@ -81,19 +89,19 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
-    public Integer getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Integer startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Integer getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Integer endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 

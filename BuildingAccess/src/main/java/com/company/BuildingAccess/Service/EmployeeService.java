@@ -45,7 +45,10 @@ public class EmployeeService {
 
     //UPDATE EMPLOYEE
     public void updateEmployeeById(Employee employee, int id){
-        expRepo.save(employee);
+        //UPDATES EMPLOYEE'S TITLE
+        Employee tempEmployee = expRepo.getOne(id);
+        tempEmployee.setTitle(employee.getTitle());
+        expRepo.save(tempEmployee);
     }
 
     //DELETE EMPLOYEE
@@ -55,18 +58,23 @@ public class EmployeeService {
 
     //FIND EMPLOYEE BY NAME
     public List<Employee> findByName(String name){
-        return findByName(name);
+        return expRepo.findByName(name);
     }
 
     //FIND EMPLOYEE BY JOB TITLE
     public List<Employee> findByTitle(String title){
-        return findByTitle(title);
+        return expRepo.findByTitle(title);
     }
 
     //FIND EMPLOYEE BY HIRE DATE
     public List<Employee> findByHireDate(String hireDate){
-        return findByHireDate(hireDate);
+        return expRepo.findByHireDate(hireDate);
     }
 
-    //
+    //FIND EMPLOYEE BY COMPANY
+    public List<Employee> findByCompany(String company){
+        return expRepo.findByCompanyName(company);
+    }
+
+
 }

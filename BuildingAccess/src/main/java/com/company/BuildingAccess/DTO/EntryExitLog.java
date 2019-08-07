@@ -2,30 +2,33 @@ package com.company.BuildingAccess.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name="entryExitLog")
+@Table(name="log")
 public class EntryExitLog {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer logId;
-    @NotNull
-    private Integer entry;
-    @NotNull
-    private Integer exit;
-    @NotNull
-    private Integer time;
+    private Integer employeeId;
+    @NotEmpty
+    private String entryTime;
+    @NotEmpty
+    private String exitTime;
+
+
 
     //ONE ENTRY EXIT LOG TO MANY EMPLOYEES
     //LINKS TO THE EMPLOYEE SET
     //ALLOWS AN ENTRY EXIT LOG TO HAVE MANY EMPLOYEES
-    @OneToMany(mappedBy="entryExitLog", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="log", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     @JsonIgnore
     private Set<Employee> employees;
 
@@ -38,29 +41,30 @@ public class EntryExitLog {
         this.logId = logId;
     }
 
-    public Integer getEntry() {
-        return entry;
+    public Integer getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEntry(Integer entry) {
-        this.entry = entry;
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public Integer getExit() {
-        return exit;
+    public String getEntry() {
+        return entryTime;
     }
 
-    public void setExit(Integer exit) {
-        this.exit = exit;
+    public void setEntry(String entryTime) {
+        this.entryTime = entryTime;
     }
 
-    public Integer getTime() {
-        return time;
+    public String getExit() {
+        return exitTime;
     }
 
-    public void setTime(Integer time) {
-        this.time = time;
+    public void setExit(String exitTime) {
+        this.exitTime = exitTime;
     }
+
 
     public Set<Employee> getEmployees() {
         return employees;
@@ -79,25 +83,24 @@ public class EntryExitLog {
         if (o == null || getClass() != o.getClass()) return false;
         EntryExitLog that = (EntryExitLog) o;
         return Objects.equals(logId, that.logId) &&
-                Objects.equals(entry, that.entry) &&
-                Objects.equals(exit, that.exit) &&
-                Objects.equals(time, that.time) &&
+                Objects.equals(employeeId, that.employeeId) &&
+                Objects.equals(entryTime, that.entryTime) &&
+                Objects.equals(exitTime, that.exitTime) &&
                 Objects.equals(employees, that.employees);
     }
-    //USED WITH OBJECT EQUALS
+
     @Override
     public int hashCode() {
-        return Objects.hash(logId, entry, exit, time, employees);
+        return Objects.hash(logId, employeeId, entryTime, exitTime,  employees);
     }
 
-    //THIS IS USED TO MAKE THE PRINT LOOK NEAT AND CORRECT
     @Override
     public String toString() {
         return "EntryExitLog{" +
                 "logId=" + logId +
-                ", entry=" + entry +
-                ", exit=" + exit +
-                ", time=" + time +
+                ", employeeId=" + employeeId +
+                ", entry=" + entryTime +
+                ", exits=" + exitTime +
                 ", employees=" + employees +
                 '}';
     }

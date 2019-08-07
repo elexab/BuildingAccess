@@ -29,7 +29,7 @@ public class EmployeeController {
     }
 
     //READ, GET
-    @RequestMapping(value="/employees", method = RequestMethod.GET)
+    @RequestMapping(value="/employee", method = RequestMethod.GET)
     public List<Employee> getAllEmployees(){
         return service.getAllEmployees();
     }
@@ -68,6 +68,12 @@ public class EmployeeController {
     @RequestMapping(value = "/employeeByHireDate/{hireDate}", method = RequestMethod.GET)
     public List<Employee> getEmployeeByHireDate(@PathVariable String hireDate){
         return service.findByHireDate(hireDate);
+    }
+
+    //FIND EMPLOYEE BY COMPANY, GET
+    @RequestMapping(value = "/employeeByCompany/{companyName}", method = RequestMethod.GET)
+    public List<Employee> getEmployeeByCompany(@PathVariable String companyName){
+        return service.findByCompany(companyName);
     }
 
 }

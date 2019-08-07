@@ -16,16 +16,14 @@ import java.util.Set;
 @Table(name="company")
 public class Company {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer companyId;
     @NotEmpty
     @Length(max=50)
     private String name;
-    private boolean access;
     @NotNull
     private Integer floor;
-    private boolean promotion;
-    private boolean demotion;
+
 
     //ONE COMPANY TO MANY EMPLOYEES
     //LINKS TO THE EMPLOYEE SET
@@ -51,13 +49,7 @@ public class Company {
         this.name = name;
     }
 
-    public boolean isAccess() {
-        return access;
-    }
 
-    public void setAccess(boolean access) {
-        this.access = access;
-    }
 
     public Integer getFloor() {
         return floor;
@@ -67,22 +59,6 @@ public class Company {
         this.floor = floor;
     }
 
-    public boolean isPromotion() {
-        return promotion;
-    }
-
-    public void setPromotion(boolean promotion) {
-        this.promotion = promotion;
-    }
-
-    public boolean isDemotion() {
-        return demotion;
-    }
-
-    public void setDemotion(boolean demotion) {
-        this.demotion = demotion;
-    }
-
     public Set<Employee> getEmployees() {
         return employees;
     }
@@ -90,7 +66,8 @@ public class Company {
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
     }
-    //THIS IS A METHOD CREATE TO COMPARE THE INFORMATION
+
+    //THIS IS A METHOD USED TO COMPARE THE INFORMATION
     //IN SEVERAL DIFFERENT TABLES TO MAKE SURE IT IS EXACTLY
     //THE SAME
     @Override
@@ -98,10 +75,7 @@ public class Company {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Company company = (Company) o;
-        return access == company.access &&
-                promotion == company.promotion &&
-                demotion == company.demotion &&
-                Objects.equals(companyId, company.companyId) &&
+        return Objects.equals(companyId, company.companyId) &&
                 Objects.equals(name, company.name) &&
                 Objects.equals(floor, company.floor) &&
                 Objects.equals(employees, company.employees);
@@ -109,7 +83,7 @@ public class Company {
     //USED WITH OBJECT EQUALS
     @Override
     public int hashCode() {
-        return Objects.hash(companyId, name, access, floor, promotion, demotion, employees);
+        return Objects.hash(companyId, name, floor, employees);
     }
     //THIS IS USED TO MAKE THE PRINT LOOK NEAT AND CORRECT
     @Override
@@ -117,10 +91,7 @@ public class Company {
         return "Company{" +
                 "companyId=" + companyId +
                 ", name='" + name + '\'' +
-                ", access=" + access +
                 ", floor=" + floor +
-                ", promotion=" + promotion +
-                ", demotion=" + demotion +
                 ", employees=" + employees +
                 '}';
     }
